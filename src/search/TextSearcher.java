@@ -9,6 +9,8 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class TextSearcher {
 
@@ -88,7 +90,7 @@ public class TextSearcher {
 			// Iterate over each match
 			for (int index : indices){
 			    // Create a string builder for adding context
-			    StringBuilder stringBuilder = new StringBuilder();
+			    String stringBuilder;
 			    // Offsets are by context * 2. This is because for each word, there is one index of punctuation
 			    // The start index is the index - context * 2.
 			    int startIndex = index - contextWords*2;
@@ -112,11 +114,14 @@ public class TextSearcher {
                 }
 
                 // Iterate over the indices and add them to the string builder
-                for (int i = startIndex; i <= stopIndex; i++){
-                    stringBuilder.append(tokens.get(i));
-                }
+                // Everyone loves lambdas
+                stringBuilder = IntStream
+                        .rangeClosed(startIndex, stopIndex)
+                        .mapToObj(i -> tokens.get(i))
+                        .collect(Collectors.joining());
+
                 // Create the string and add it to the output list
-                contextStrings.add(stringBuilder.toString());
+                contextStrings.add(stringBuilder);
             }
             // Convert from ArrayList to fixed Array
             return contextStrings.toArray(new String[0]);
