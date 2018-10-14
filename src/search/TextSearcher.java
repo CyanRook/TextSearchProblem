@@ -1,13 +1,10 @@
 package search;
-
-import javafx.util.Pair;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -66,7 +63,7 @@ public class TextSearcher {
 				if (contextMap.containsKey(token.toLowerCase())) {
 					contextMap.get(token.toLowerCase()).add(index);
 				} else {
-					contextMap.put(token.toLowerCase(), new ArrayList<>(Arrays.asList(index)));
+					contextMap.put(token.toLowerCase(), new ArrayList<>(Collections.singletonList(index)));
 				}
 			}
 		}
